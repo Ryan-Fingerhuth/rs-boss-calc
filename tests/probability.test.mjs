@@ -1,8 +1,26 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { probability, milestone } from '../src/probability.ts'
+import { probability, milestone, dryStreak } from '../src/probability.ts'
 
 const close = (actual, expected) => assert.ok(Math.abs(actual - expected) < 1e-12, `${actual} != ${expected}`)
+
+test('dry streak measures the historical no-drop probability and expected drops', () => {
+  const result = dryStreak(1000, 512)
+  close(result.noDrop, (511 / 512) ** 1000)
+  close(result.receivedDrop, 1 - result.noDrop)
+  close(result.expectedDrops, 1000 / 512)
+  assert.deepEqual(dryStreak(0, 512), { noDrop: 1, receivedDrop: 0, expectedDrops: 0 })
+  assert.deepEqual(dryStreak(1, 1), { noDrop: 0, receivedDrop: 1, expectedDrops: 1 })
+})
+
+test('dry streak includes historical thresholds and multiple rolls', () => {
+  const result = dryStreak(1000, 1500, 500, 3)
+  close(result.noDrop, (1 - 1 / 1500) ** 1500 * (1 - 2 / 1500) ** 1500)
+  close(result.expectedDrops, 3)
+  const rare = dryStreak(20000, 512)
+  assert.ok(rare.noDrop > 0)
+  assert.ok(rare.noDrop < 1e-16)
+})
 
 test('fixed-rate probabilities include all independent loot rolls', () => {
   close(probability(500, 384), 1 - (383 / 384) ** 500)

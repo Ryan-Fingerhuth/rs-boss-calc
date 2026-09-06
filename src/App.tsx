@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { bosses, bossCount, wikiUrl } from "./data";
-import { milestone, probability } from "./probability";
+import { dryStreak, milestone, probability } from "./probability";
 import { readPreferences, savePreferences } from "./preferences";
 import { dropOptions } from "./drop-options";
 import { bossImages } from "./boss-images";
 import { parsePlannedKills, addPlannedKills, MAX_PLANS } from "./planned-kills";
 import "./App.css";
+import { applyTheme, readTheme, themes } from "./themes";
 const fmt = (n: number) => n.toLocaleString("en-US");
 const pct = (n: number) =>
   n > 0.99995 && n < 1 ? ">99.99%" : `${(n * 100).toFixed(2)}%`;
@@ -26,6 +27,7 @@ const planColors = [
 ];
 const assetBase = import.meta.env?.BASE_URL ?? "/";
 function App() {
+  const [theme, setTheme] = useState(readTheme);
   const [initial] = useState(readPreferences);
   const [bossIndex, setBossIndex] = useState(() =>
     bosses.findIndex((b) => b.name === initial.boss),
@@ -104,6 +106,7 @@ function App() {
     threshold >= 0 &&
     threshold <= 10000000;
   const chance = valid ? probability(n, denominator, kc, threshold, rolls) : 0;
+  const dryness = valid ? dryStreak(kc, denominator, threshold, rolls) : null;
   const comparisons = valid
     ? (plans ?? []).map((count, index) => ({
         count,
@@ -167,6 +170,22 @@ function App() {
             RuneScape Wiki ↗
           </a>
         </nav>
+        <div className="theme-picker">
+          <label htmlFor="theme">Theme</label>
+          <select
+            id="theme"
+            value={theme}
+            onChange={(event) => {
+              const selected = themes.find(item => item.id === event.target.value);
+              if (selected) {
+                setTheme(selected.id);
+                applyTheme(selected.id);
+              }
+            }}
+          >
+            {themes.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
+          </select>
+        </div>
         <span className="community">
           <span /> Built for the grind
         </span>
@@ -513,7 +532,7 @@ function App() {
                     <div
                       className="probability-ring"
                       style={{
-                        background: `conic-gradient(var(--green) ${chance * 360}deg, #29332f 0deg)`,
+                        background: `conic-gradient(var(--accent) ${chance * 360}deg, var(--ring-track) 0deg)`,
                       }}
                     >
                       <div>
@@ -537,6 +556,40 @@ function App() {
                     </span>
                   </div>
                 </section>
+                {dryness && (
+                  <section className="panel dryness-card">
+                    <div className="result-heading">
+                      <h2>How dry is your hunt?</h2>
+                      <span className="dryness-count">{fmt(kc)} kills without a drop</span>
+                    </div>
+                    <p className="dryness-assumption">
+                      Assumes no {dropName} in your current {fmt(kc)} kills,
+                      using the selected encounter and rate throughout.
+                    </p>
+                    <div className="dryness-stats">
+                      <div>
+                        <strong>{dryness.noDrop < 0.00005 && kc > 0 ? "<0.01%" : pct(dryness.noDrop)}</strong>
+                        <span>chance of going this dry</span>
+                      </div>
+                      <div>
+                        <strong>{pct(dryness.receivedDrop)}</strong>
+                        <span>would have received at least one</span>
+                      </div>
+                      <div>
+                        <strong>{dryness.expectedDrops.toLocaleString("en-US", { maximumFractionDigits: 2 })}</strong>
+                        <span>expected drops over these kills</span>
+                      </div>
+                    </div>
+                    <p className="field-help">
+                      {kc === 0
+                        ? "Enter your current kill count to measure a dry streak."
+                        : threshold
+                          ? "Includes pet threshold increases from kill zero. Expected drops are an average, not a guarantee."
+                          : "A smaller no-drop chance means a rarer dry streak. Past misses do not improve your next kill's odds."}
+                      {" "}If you already received this drop or changed encounters, this does not describe your actual streak.
+                    </p>
+                  </section>
+                )}
                 <section className="panel chart-panel">
                   <div className="chart-heading">
                     <div>
@@ -574,12 +627,12 @@ function App() {
                         <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
                           <stop
                             offset="0%"
-                            stopColor="#38bdf8"
+                            stopColor="var(--chart-fill-start)"
                             stopOpacity=".4"
                           />
                           <stop
                             offset="100%"
-                            stopColor="#818cf8"
+                            stopColor="var(--chart-fill-end)"
                             stopOpacity=".03"
                           />
                         </linearGradient>
@@ -591,7 +644,7 @@ function App() {
                             x2="630"
                             y1={210 - v * 1.8}
                             y2={210 - v * 1.8}
-                            stroke="#364968"
+                            stroke="var(--chart-grid)"
                             strokeDasharray="3 5"
                           />
                           <text x="35" y={214 - v * 1.8} textAnchor="end">
@@ -607,7 +660,7 @@ function App() {
                         className="probability-curve"
                         points={points.join(" ")}
                         fill="none"
-                        stroke="#67e8f9"
+                        stroke="var(--chart-curve)"
                         strokeWidth="3.5"
                       />
                       {comparisons.map((plan, index) => {

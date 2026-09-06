@@ -28,6 +28,15 @@ function render(preferences) {
   }
 }
 
+test('dryness card uses completed kills and the selected custom rate', () => {
+  const html = render({ boss: 'Nakatra, Devourer Eternal', scenario: 'Hard mode', drop: 'Shard of Genesis Essence', current: '1000', customRate: '512', customThreshold: '0' })
+  assert.match(html, /How dry is your hunt\?/)
+  assert.match(html, /14\.16%/)
+  assert.match(html, /85\.84%/)
+  assert.match(html, /1\.95/)
+  assert.match(html, /Assumes no Shard of Genesis Essence/)
+})
+
 test('rendered normal-mode dropdown exposes the shard and preserves an incompatible saved target', () => {
   const html = render({ boss: 'Nakatra, Devourer Eternal', scenario: 'Normal mode', drop: 'Shard of Genesis Essence' })
   assert.match(html, /<option value="Shard of Genesis Essence" selected="">Shard of Genesis Essence — unavailable in this scenario<\/option>/)
