@@ -1,0 +1,191 @@
+// Local RuneScape Wiki thumbnails. Attribution: public/bosses/CREDITS.md
+export const bossImages: Record<string, string[]> = {
+  "General Graardor": [
+    "bosses/general-graardor.png"
+  ],
+  "King Black Dragon": [
+    "bosses/king-black-dragon.png"
+  ],
+  "Kree'arra": [
+    "bosses/kree-arra.png"
+  ],
+  "Giant Mole": [
+    "bosses/giant-mole.png"
+  ],
+  "Chaos Elemental": [
+    "bosses/chaos-elemental.png"
+  ],
+  "Kalphite Queen": [
+    "bosses/kalphite-queen.png"
+  ],
+  "Flesh-hatcher Mhekarnahz": [
+    "bosses/flesh-hatcher-mhekarnahz.png"
+  ],
+  "Ivar, King of Bones": [
+    "bosses/ivar-king-of-bones.png"
+  ],
+  "Silverquill, the Dreadhog": [
+    "bosses/silverquill-the-dreadhog.png"
+  ],
+  "Vorago": [
+    "bosses/vorago.png"
+  ],
+  "Solak": [
+    "bosses/solak.png"
+  ],
+  "Barrows: Rise of the Six": [
+    "bosses/barrows-rise-of-the-six.png"
+  ],
+  "Araxxor / Araxxi": [
+    "bosses/araxxor-araxxi.png"
+  ],
+  "Kalphite King": [
+    "bosses/kalphite-king.png"
+  ],
+  "Queen Black Dragon": [
+    "bosses/queen-black-dragon.png"
+  ],
+  "Corporeal Beast": [
+    "bosses/corporeal-beast.png"
+  ],
+  "The Magister": [
+    "bosses/the-magister.png"
+  ],
+  "Raksha, the Shadow Colossus": [
+    "bosses/raksha-the-shadow-colossus.png"
+  ],
+  "Zemouregal & Vorkath": [
+    "bosses/zemouregal-vorkath.png",
+    "bosses/zemouregal-vorkath-2.png"
+  ],
+  "Amascut, the Devourer": [
+    "bosses/amascut-the-devourer.png"
+  ],
+  "Nex, Angel of Death": [
+    "bosses/nex-angel-of-death.png"
+  ],
+  "Nex": [
+    "bosses/nex.png"
+  ],
+  "K'ril Tsutsaroth": [
+    "bosses/k-ril-tsutsaroth.png"
+  ],
+  "Commander Zilyana": [
+    "bosses/commander-zilyana.png"
+  ],
+  "Telos, the Warden": [
+    "bosses/telos-the-warden.png"
+  ],
+  "Gregorovic": [
+    "bosses/gregorovic.png"
+  ],
+  "Twin Furies": [
+    "bosses/twin-furies.png",
+    "bosses/twin-furies-2.png"
+  ],
+  "Vindicta": [
+    "bosses/vindicta.png"
+  ],
+  "Helwyr": [
+    "bosses/helwyr.png"
+  ],
+  "Kerapac, the bound": [
+    "bosses/kerapac-the-bound.png"
+  ],
+  "Arch-Glacor": [
+    "bosses/arch-glacor.png"
+  ],
+  "Croesus": [
+    "bosses/croesus.png"
+  ],
+  "TzKal-Zuk": [
+    "bosses/tzkal-zuk.png"
+  ],
+  "Hermod, the Spirit of War": [
+    "bosses/hermod-the-spirit-of-war.png"
+  ],
+  "Rasial, the First Necromancer": [
+    "bosses/rasial-the-first-necromancer.png"
+  ],
+  "The Sanctum Guardian": [
+    "bosses/the-sanctum-guardian.png"
+  ],
+  "Masuta the Ascended": [
+    "bosses/masuta-the-ascended.png"
+  ],
+  "Seiryu the Azure Serpent": [
+    "bosses/seiryu-the-azure-serpent.png"
+  ],
+  "Astellarn": [
+    "bosses/astellarn.png"
+  ],
+  "Verak Lith": [
+    "bosses/verak-lith.png"
+  ],
+  "Black stone dragon": [
+    "bosses/black-stone-dragon.png"
+  ],
+  "Crassian Leviathan": [
+    "bosses/crassian-leviathan.png"
+  ],
+  "Taraket the Necromancer": [
+    "bosses/taraket-the-necromancer.png"
+  ],
+  "The Ambassador": [
+    "bosses/the-ambassador.png"
+  ],
+  "Zamorak, Lord of Chaos": [
+    "bosses/zamorak-lord-of-chaos.png"
+  ],
+  "Vermyx, Brood Mother": [
+    "bosses/vermyx-brood-mother.png"
+  ],
+  "Kezalam, the Wanderer": [
+    "bosses/kezalam-the-wanderer.png"
+  ],
+  "Nakatra, Devourer Eternal": [
+    "bosses/nakatra-devourer-eternal.png"
+  ],
+  "The Gate of Elidinis": [
+    "bosses/the-gate-of-elidinis.png"
+  ],
+  "Legio Primus": [
+    "bosses/legio-primus.png"
+  ],
+  "Legio Secundus": [
+    "bosses/legio-secundus.png"
+  ],
+  "Legio Tertius": [
+    "bosses/legio-tertius.png"
+  ],
+  "Legio Quartus": [
+    "bosses/legio-quartus.png"
+  ],
+  "Legio Quintus": [
+    "bosses/legio-quintus.png"
+  ],
+  "Legio Sextus": [
+    "bosses/legio-sextus.png"
+  ],
+  "Rathis": [
+    "bosses/rathis.png"
+  ],
+  "Pthentraken": [
+    "bosses/pthentraken.png"
+  ],
+  "Orikalka": [
+    "bosses/orikalka.png"
+  ],
+  "Osseous": [
+    "bosses/osseous.png"
+  ],
+  "Dagannoth Prime": [
+    "bosses/dagannoth-prime.png"
+  ],
+  "Dagannoth Rex": [
+    "bosses/dagannoth-rex.png"
+  ],
+  "Dagannoth Supreme": [
+    "bosses/dagannoth-supreme.png"
+  ]
+}
