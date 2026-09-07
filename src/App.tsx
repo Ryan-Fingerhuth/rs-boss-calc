@@ -669,7 +669,7 @@ function App() {
                         return (
                           <g key={plan.count}>
                             <title>
-                              {fmt(plan.count)} kills: {pct(plan.chance)}
+                              {`${fmt(plan.count)} kills: ${pct(plan.chance)}`}
                             </title>
                             <line
                               x1={x}
