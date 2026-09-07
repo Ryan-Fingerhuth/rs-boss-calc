@@ -685,7 +685,7 @@ function App() {
                               cy={y}
                               r={plan.count === n ? 10 : 8}
                               fill={plan.color}
-                              stroke="#0f172a"
+                              stroke={theme === "monochrome" ? "#000" : "#0f172a"}
                               strokeWidth="2"
                             />
                             <text

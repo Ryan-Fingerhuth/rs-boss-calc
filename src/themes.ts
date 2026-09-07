@@ -1,4 +1,5 @@
 export const themes = [
+  { id: 'monochrome', name: 'Black & White' },
   { id: 'forest', name: 'Forest' },
   { id: 'midnight', name: 'Midnight Blue' },
   { id: 'plum', name: 'Plum' },
@@ -10,9 +11,9 @@ const storageKey = 'dropwise.theme.v1'
 export function readTheme(): Theme {
   try {
     const saved = window.localStorage.getItem(storageKey)
-    return themes.find(theme => theme.id === saved)?.id ?? 'forest'
+    return themes.find(theme => theme.id === saved)?.id ?? 'monochrome'
   } catch {
-    return 'forest'
+    return 'monochrome'
   }
 }
 
