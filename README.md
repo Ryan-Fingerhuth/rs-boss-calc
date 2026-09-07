@@ -1,75 +1,68 @@
-# React + TypeScript + Vite
+﻿# Dropwise — RuneScape Boss Drop Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**[Open the calculator →](https://uoxo-rs.github.io/rs-boss-calc/)**
 
-Currently, two official plugins are available:
+Dropwise helps RuneScape 3 players understand their chances of getting a boss drop. Choose a boss, encounter scenario, and target item to estimate the chance of receiving at least one drop over your planned kills, compare different kill goals, or see how unusual your dry streak is.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The calculator runs in your browser with no account or installation required.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **62 bosses and custom drops:** Browse encounters grouped by dungeon or boss family, with selected equipment, components, and pet targets sourced from the RuneScape Wiki.
+- **Encounter presets:** Select supported modes, group sizes, personal loot piles, contribution bands, or enrage presets where relevant.
+- **Pet thresholds:** Include existing kill count when calculating threshold-based pet chances, with supported multiple-roll mechanics accounted for.
+- **Kill-plan comparisons:** Compare up to 10 planned kill counts, explore the probability chart, and select probability milestones to find a kill goal.
+- **Dry-streak statistics:** See the chance of going your entered kill count without a drop and the expected number of drops over that hunt.
+- **Custom inputs:** Enter your own per-kill drop rate and pet threshold for a custom calculation.
+- **Clear target restrictions:** See drops from every scenario, including hard-mode-only items. Targets without a supported numerical model show an explanation.
+- **Saved preferences and themes:** Return to your previous selections in the same browser, choose a visual theme, or reset your inputs. The layout adapts to desktop and mobile screens.
 
-## Expanding the ESLint configuration
+## Getting started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Visit **[Dropwise](https://uoxo-rs.github.io/rs-boss-calc/)**.
+2. Choose a boss, scenario, and target drop.
+3. Enter your existing kill count, following any boss-specific guidance shown below the input.
+4. Enter planned additional kills, or several counts separated by commas, such as `50, 100, 500`.
+5. Explore your odds, compare plans, and use milestones to choose a target.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+For dry-streak statistics, the existing kill count is treated as a hunt with no target drop. For bosses with shared pet thresholds, follow the displayed guidance about combined kill counts.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Data and assumptions
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Dropwise uses a curated local snapshot of RuneScape Wiki information. Each boss links to its Wiki page, and scenario notes explain the assumptions behind its rates. The site does not fetch live rates during use.
 
+Probabilities are estimates under the selected model, not guarantees. Fixed-rate drops do not become more likely after previous misses. Supported pet thresholds improve the rate as kill count increases; other forms of bad-luck mitigation are not generally simulated.
+
+This is a selected-drop calculator, not a full collection-log completion simulator. Some ordered rewards are represented as **any next piece**, and unsupported or unknown rates have no numerical estimate. Luck boosts and other encounter-specific exclusions are documented in the linked notes.
+
+- [Calculator mechanics and limitations](CALCULATOR.md)
+- [Wiki sources and curated corrections](SOURCES.md)
+- [Drop coverage and audit notes](DROP-AUDIT.md)
+- [Boss artwork credits](public/bosses/CREDITS.md)
+
+## Local development
+
+Built with React, TypeScript, and Vite. Use Node.js 24 and npm.
+
+```sh
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the local development server. |
+| `npm test` | Run catalogue, probability, UI, preferences, and Wiki tooling tests. |
+| `npm run lint` | Run ESLint. |
+| `npm run build` | Check TypeScript and build the site into `dist/`. |
+| `npm run preview` | Preview the production build locally. |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Maintaining Wiki sources
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The repository includes tools to track changes to the Wiki sources used by the catalogue:
 
-```
+- `npm run wiki:fetch` downloads and caches source content and revision IDs.
+- `npm run wiki:check` compares cached sources with the accepted snapshot and generates a review report.
+- `npm run wiki:sync` shows the report and instructions for accepting a reviewed snapshot; acceptance runs the tests before saving it.
+
+These tools track source changes. They do not automatically import drop rates or replace curated formulas. See the [Wiki sync guide](wiki/README.md) for the full review and acceptance workflow.

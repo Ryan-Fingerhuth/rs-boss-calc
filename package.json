@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "wiki:fetch": "node --experimental-strip-types scripts/wiki.mjs fetch",
+    "wiki:check": "node --experimental-strip-types scripts/wiki.mjs check",
+    "wiki:sync": "node --experimental-strip-types scripts/wiki.mjs sync",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
